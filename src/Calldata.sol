@@ -85,6 +85,7 @@ contract CallerContract {
             mstore(0xa0, num1)
             mstore(0xc0, num2)
 
+            // 160-4=156 -> 9c; 32(0x6..) + 32(num1) + 4=68 -> 44;
             let success := staticcall(gas(), calledContract, 0x9c, 0x44, 0x00, 0x00)
 
             if iszero(success) {
@@ -115,6 +116,7 @@ contract CallerContract {
             mstore(0x0120, num3)
             mstore(0x0140, num4)
 
+            // 32*6+4=196 -> c4
             let success := staticcall(gas(), calledContract, 0x9c, 0xc4, 0x00, 0x00)
 
             if iszero(success) {
@@ -132,9 +134,12 @@ contract CallerContract {
         if (len > 31) revert();
 
         address calledContract = _calledContract;
+        // When you access strCopy, the first 32 bytes at the starting position of strCopy contain the length of the bytes array.
         bytes memory strCopy = bytes(str);
 
         assembly {
+            // The actual bytes of the string start at an offset of 32 bytes from the start of strCopy, which is why the add(strCopy, 0x20) is used. 
+            // It's computing the address in memory where the actual string data begins.
             mstore(0x0200, mload(add(strCopy, 0x20)))
 
             mstore(0x80, 0x7fcaf666)
@@ -142,6 +147,7 @@ contract CallerContract {
             mstore(0xc0, len)
             mstore(0xe0, mload(0x0200))
 
+            // "7fcaf666" is 4 bytes. others don't know, consider them as 32 bytes. so 32*3+4=100 -> 64
             let success := call(gas(), calledContract, 0, 0x9c, 0x64, 0x00, 0x00)
         }
     }
