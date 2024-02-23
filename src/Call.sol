@@ -34,11 +34,13 @@ contract CallerContract {
         address _called = called;
 
         assembly {
+            // "0x3fb5c1cb" is keccak256(setNumber(uint256))
             mstore(0x00, 0x3fb5c1cb) // Start at 0x1c, this is the first calldata entry.
+            // set first params into 0x20(32bytes), if function have second params then set into 0x40(64bytes)
             mstore(0x20, num)
 
             // To learn about calldata encoding: https://rb.gy/vmzhck.
-            // Read 32 + 4 bytes.
+            // Read 32 + 4 bytes (0x24). 0x1c(32-4, offset(num value))
             let success := call(gas(), _called, 0, 0x1c, 0x24, 0, 0)
 
             if iszero(success) { revert(0x00, 0x00) }
