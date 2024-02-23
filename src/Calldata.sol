@@ -64,7 +64,7 @@ contract CallerContract {
             mstore(0x00, 0x1003e2d2)
             mstore(0x20, num)
 
-            // read only call to another contract
+            // read only(not change storage) call to another contract
             let success := staticcall(gas(), calledContract, 0x1c, 0x24, 0x00, 0x00)
 
             if iszero(success) {
