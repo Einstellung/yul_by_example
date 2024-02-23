@@ -13,6 +13,8 @@ contract CalledContract {
     function getNumber() public view returns (uint256) {
         assembly {
             mstore(0x00, sload(0))
+            // This instruction returns the data located in memory starting from address 0x00 and continuing for 0x20 bytes (32 bytes, which is the size of one slot in Solidity). 
+           // This is how Solidity functions return values.
             return(0x00, 0x20)
         }
     }
