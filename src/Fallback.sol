@@ -8,6 +8,8 @@ contract Fallback {
     /// @notice If the contract balance finishes, it reverts.
     fallback() external {
         assembly {
+            // call(gas(), caller(), value(eth amount(wei)), inOffset, inSize, outOffset, outSize)
+            // this line code is same as: (bool success, ) = caller().call{value: 1 wei}("");
             let sent := call(gas(), caller(), 1, 0x00, 0x00, 0x00, 0x00)
             if iszero(sent) {
                 revert(0x00, 0x00)
