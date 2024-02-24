@@ -12,6 +12,7 @@ contract Events {
 
     function emitIndexedEvent(uint256 x) public {
         assembly {
+            // logx(memory_start, memory_length, topic1, [topic2], [topic3], ...)
             log3(0x00, 0x00, IndexedEventTopic, caller(), x)
         }
     }
@@ -20,6 +21,7 @@ contract Events {
         assembly {
             mstore(0x00, a)
             mstore(0x20, b)
+            // memory length is 0x40 so we set 0x40 here.
             log1(0x00, 0x40, NonIndexedEventTopic)
         }
     }
