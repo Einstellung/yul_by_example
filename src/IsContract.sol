@@ -5,6 +5,8 @@ pragma solidity 0.8.17;
 contract IsContract {
     function isContract(address _address) public view returns (bool _isContract) {
         assembly {
+            // `extcodesize` opcode is used to get the size of a contract's code stored at a specific address. The size is measured in bytes.
+            // If the address does not contain a contract, or if the contract has been self-destructed, `extodesize` returns 0
             let size := extcodesize(_address)
 
             switch size
