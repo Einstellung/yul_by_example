@@ -21,6 +21,7 @@ contract Mapping {
 
             // Hash the content in memory location `memptr` to `memptr+0x40`.
             // Assign hash to var `addrBalanceSlot`.
+            // memptr and 0x40 is memory loaction, not value itself
             let addrBalanceSlot := keccak256(memptr, 0x40)
 
             // Load the hash content stored in storage.
