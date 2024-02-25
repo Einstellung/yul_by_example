@@ -10,6 +10,7 @@ contract HelloWorld {
             let greet := 0x48656c6c6f20576f726c64210000000000000000000000000000000000000000
             // Store the string offset in mem[0x00].
             // This is an ABI requirement, 0x20 must be stored at any chosen offset.
+            // tell others this string length is 32bytes
             mstore(0x00, 0x20)
             // Store the length of the string in mem[offset + 32 bytes].
             mstore(0x20, 0x0c) // 0x0c = 12, length of "Hello World!".
