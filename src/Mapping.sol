@@ -80,6 +80,7 @@ contract NestedMapping {
             mstore(memptr, _i)
 
             // Store `innerHash` in memory location memptr+0x20.
+            // innerHash is a new slot number
             mstore(add(memptr, 0x20), innerHash)
 
             // Hash the content in memory location `memptr` to `memptr+0x40`.
