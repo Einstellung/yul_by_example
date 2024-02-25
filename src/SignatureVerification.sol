@@ -14,6 +14,7 @@ contract SignatureVerification {
         assembly {
             r := mload(add(signature, 0x20))
             s := mload(add(signature, 0x40))
+            // calculate `v` by taking the first byte of the third 32-byte segment
             v := byte(0, mload(add(signature, 0x60)))
         }
     }
@@ -24,6 +25,8 @@ contract SignatureVerification {
         bytes memory sig
     ) public pure returns (bool) {
         (bytes32 r, bytes32 s, uint8 v) = splitSignature(sig);
+        // `ecrecover` is a build-in Eth function that can recover the address associated with the public key
+        // from the signature(r,s,v) and the original hash
         address recovered = ecrecover(hash, v, r, s);
 
         return (recovered != address(0) && recovered == signer);
