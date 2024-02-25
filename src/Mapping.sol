@@ -3,6 +3,9 @@ pragma solidity 0.8.17;
 
 contract Mapping {
     // Mapping from address to uint.
+
+    // The content of slot 0 is not directly modified or used to store any value from the `mapping`. It's the starting point
+    // for the hash calculation that determines where each value in the `mapping` will be stored
     mapping(address => uint256) myMap; // slot 0.
 
     function get(address _addr) public view returns (uint256) {
